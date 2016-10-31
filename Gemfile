@@ -21,6 +21,8 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # Use bootstrap for styling.
 gem 'bootstrap-sass', '~> 3.3.7'
+# Use faraday as an HTTP client
+gem 'faraday', '~>0.8.11'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -28,6 +30,9 @@ group :development, :test do
   # Use RSpec for testing
   gem 'rspec-rails', '~> 3.5'
   gem 'rails-controller-testing'
+  # Use vcr and webmock to help with HTTP interaction tests
+  gem 'vcr', '~> 3.0.3'
+  gem 'webmock', '~> 2.1.0'
 end
 
 group :development do
