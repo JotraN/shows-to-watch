@@ -27,4 +27,12 @@ RSpec.describe "TVDB Client", :vcr do
       expect(hash).to be_an_instance_of(Hash)
     end
   end
+
+  describe "authenticates the client" do
+    it "retrieves and sets the client's token" do
+      token = @client.authenticate
+      expect(token).not_to be_nil
+      expect(@client.token).not_to be_nil
+    end
+  end
 end
