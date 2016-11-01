@@ -1,7 +1,7 @@
 require 'faraday'
 require 'json'
 
-class TVDBClient 
+class TvdbClient 
   attr_reader :api_key, :token
 
   def initialize(api_key)
@@ -23,11 +23,31 @@ class TVDBClient
   end
 
   def authenticate
-    req_url = "/login"
-    body = '{ "apikey": "' + @api_key + '" }'
-    resp = get_tvdb_hash(req_url, body)
-    @token = resp["token"]
+    if valid_token?
+      @token = TvdbToken.first
+    else
+      req_url = "/login"
+      body = '{ "apikey": "' + @api_key + '" }'
+      resp = get_tvdb_hash(req_url, body)
+      @token = resp["token"]
+    end
   end
 
-  private :get_hash, :get_tvdb_hash
+  def save_token
+    first = TvdbToken.first
+    if first
+      TvdbToken.update(first.id, :token => @token)
+    else
+      TvdbToken.create(:token => @token)
+    end
+  end
+
+  def valid_token?
+    first = TvdbToken.first
+    if first
+      (Time.now - first.updated_at)/1.day < 1
+    end
+  end
+
+  private :get_hash, :get_tvdb_hash, :save_token, :valid_token?
 end

@@ -1,0 +1,2 @@
+class TvdbToken < ApplicationRecord
+end
