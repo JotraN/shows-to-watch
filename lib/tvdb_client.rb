@@ -8,7 +8,7 @@ class TvdbClient
     @api_key = api_key
   end
 
-  def get_hash(url, req_url="", body="")
+  def post_req(url, req_url="", body="")
     conn = Faraday.new(url)
     resp = conn.post do |req|
       req.url req_url
@@ -18,8 +18,26 @@ class TvdbClient
     JSON.parse(resp.body)
   end
 
-  def get_tvdb_hash(req_url, body="")
-    get_hash("https://api.thetvdb.com", req_url, body)
+  def get_req(url, token, req_url="", body="")
+    conn = Faraday.new(url)
+    resp = conn.get do |req|
+      req.url req_url
+      req.headers["Content-Type"] = "application/json"
+      req.headers["Authorization"] = "Bearer #{ token }"
+      req.body = body
+    end
+    JSON.parse(resp.body)
+  end
+
+  def post_tvdb(req_url, body="")
+    post_req("https://api.thetvdb.com", req_url, body)
+  end
+
+  def get_tvdb(req_url, body="")
+    if not @token
+      raise ArgumentError, "Token required for get requests."
+    end
+    get_req("https://api.thetvdb.com", @token, req_url, body)
   end
 
   def authenticate
@@ -28,7 +46,7 @@ class TvdbClient
     else
       req_url = "/login"
       body = '{ "apikey": "' + @api_key + '" }'
-      resp = get_tvdb_hash(req_url, body)
+      resp = post_tvdb(req_url, body)
       @token = resp["token"]
     end
   end
@@ -49,5 +67,10 @@ class TvdbClient
     end
   end
 
-  private :get_hash, :get_tvdb_hash, :save_token, :valid_token?
+  def search(show)
+    req_url = "/search/series?name=#{ show }"
+    get_tvdb(req_url)["data"]
+  end
+
+  private :post_req, :get_req, :post_tvdb, :get_tvdb, :save_token, :valid_token?
 end
