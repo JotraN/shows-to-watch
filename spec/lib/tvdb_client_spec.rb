@@ -14,7 +14,7 @@ RSpec.describe "Tvdb Client", :vcr do
       expect(hash).to be_an_instance_of(Hash)
     end
 
-    it "throws an error if the reponse is not json" do
+    it "raises an error if the reponse is not json" do
       url = "http://google.com/"
       expect { @client.send(:post_req, url) }.to raise_error(JSON::ParserError)
     end
@@ -104,6 +104,12 @@ RSpec.describe "Tvdb Client", :vcr do
       show = "show"
       results = @client.search(show)
       expect(results).to be_an_instance_of(Array)
+    end
+
+    it "raises an error if shows weren't found" do
+      @client.authenticate
+      show = "probably not a tv show dasdawefa"
+      expect { @client.search(show) }.to raise_error(ArgumentError)
     end
   end
 end

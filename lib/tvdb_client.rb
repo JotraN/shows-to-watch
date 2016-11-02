@@ -69,7 +69,11 @@ class TvdbClient
 
   def search(show)
     req_url = "/search/series?name=#{ show }"
-    get_tvdb(req_url)["data"]
+    hash = get_tvdb(req_url)
+    if hash["Error"]
+      raise ArgumentError, "Show not found."
+    end
+    hash["data"]
   end
 
   private :post_req, :get_req, :post_tvdb, :get_tvdb, :save_token, :valid_token?
