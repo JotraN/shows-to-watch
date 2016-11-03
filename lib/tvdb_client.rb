@@ -37,7 +37,11 @@ class TvdbClient
     if not @token
       raise ArgumentError, "Token required for get requests."
     end
-    get_req("https://api.thetvdb.com", @token, req_url, body)
+    hash = get_req("https://api.thetvdb.com", @token, req_url, body)
+    if hash["Error"]
+      raise ArgumentError, hash["Error"]
+    end
+    hash
   end
 
   def authenticate
@@ -69,11 +73,12 @@ class TvdbClient
 
   def search(show)
     req_url = "/search/series?name=#{ show }"
-    hash = get_tvdb(req_url)
-    if hash["Error"]
-      raise ArgumentError, "Show not found."
-    end
-    hash["data"]
+    get_tvdb(req_url)["data"]
+  end
+
+  def retrieve_show(show_id)
+    req_url = "/series/#{ show_id }"
+    get_tvdb(req_url)["data"]
   end
 
   private :post_req, :get_req, :post_tvdb, :get_tvdb, :save_token, :valid_token?

@@ -45,13 +45,18 @@ RSpec.describe "Tvdb Client", :vcr do
     it "retrieves the json from a tvdb get request" do
       @client.authenticate
       req_url = "/refresh_token"
-      hash = @client.send(:get_tvdb, req_url, @client.token)
+      hash = @client.send(:get_tvdb, req_url)
       expect(hash).to be_an_instance_of(Hash)
     end
 
     it "raises an error if no token" do
-      url = "http://google.com/"
-      expect { @client.send(:get_tvdb, url, nil) }.to raise_error(ArgumentError)
+      url = "/refresh_token"
+      expect { @client.send(:get_tvdb, url) }.to raise_error(ArgumentError)
+    end
+
+    it "raises an error if invalid request url" do
+      url = "/series/not_an_id"
+      expect { @client.send(:get_tvdb, url) }.to raise_error(ArgumentError)
     end
   end
 
@@ -110,6 +115,20 @@ RSpec.describe "Tvdb Client", :vcr do
       @client.authenticate
       show = "probably not a tv show dasdawefa"
       expect { @client.search(show) }.to raise_error(ArgumentError)
+    end
+  end
+
+  describe "retrieves information for a show" do
+    it "returns a hash containing show information" do
+      @client.authenticate
+      show_id = "76156"
+      expect(@client.retrieve_show(show_id)).not_to be_nil
+    end
+
+    it "raises an error if the show isn't found" do
+      @client.authenticate
+      show_id = "not_an_id"
+      expect { @client.retrieve_show(show_id) }.to raise_error(ArgumentError)
     end
   end
 end
