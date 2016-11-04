@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161101070529) do
+ActiveRecord::Schema.define(version: 20161104073243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "shows", force: :cascade do |t|
+    t.string   "tvdb_id"
+    t.string   "name"
+    t.integer  "season"
+    t.integer  "episode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "tvdb_tokens", force: :cascade do |t|
     t.string   "token"
