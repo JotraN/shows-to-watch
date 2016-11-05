@@ -7,6 +7,12 @@ RSpec.describe "Tvdb Client", :vcr do
     @client = TvdbClient.new(@KEY)
   end
 
+  describe "initialize" do
+    it "raises an error if the api key is nil" do
+      expect {TvdbClient.new(nil)}.to raise_error(ArgumentError)
+    end
+  end
+
   describe "post request" do
     it "downloads and parses the response json" do
       url = "https://api.thetvdb.com/" 

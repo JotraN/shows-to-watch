@@ -148,4 +148,12 @@ RSpec.describe ShowsController, type: :controller do
     end
   end
 
+  describe "GET #search", :vcr do
+    it "assigns the list of possible tvdb shows as @possible_shows" do
+      show = Show.create! valid_attributes
+      put :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+      expect(assigns(:possible_shows)).not_to be_nil
+    end
+  end
+
 end

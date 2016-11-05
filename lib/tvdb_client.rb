@@ -5,6 +5,9 @@ class TvdbClient
   attr_reader :api_key, :token
 
   def initialize(api_key)
+    if api_key.nil?
+      raise ArgumentError, "API Key is required."
+    end
     @api_key = api_key
   end
 

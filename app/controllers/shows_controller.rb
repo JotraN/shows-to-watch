@@ -1,28 +1,22 @@
-class ShowsController < ApplicationController
-  before_action :set_show, only: [:show, :edit, :update, :destroy]
+require 'tvdb_client'
 
-  # GET /shows
-  # GET /shows.json
+class ShowsController < ApplicationController
+  before_action :set_show, only: [:show, :edit, :update, :destroy, :search]
+
   def index
     @shows = Show.all
   end
 
-  # GET /shows/1
-  # GET /shows/1.json
   def show
   end
 
-  # GET /shows/new
   def new
     @show = Show.new
   end
 
-  # GET /shows/1/edit
   def edit
   end
 
-  # POST /shows
-  # POST /shows.json
   def create
     @show = Show.new(show_params)
 
@@ -37,8 +31,6 @@ class ShowsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /shows/1
-  # PATCH/PUT /shows/1.json
   def update
     respond_to do |format|
       if @show.update(show_params)
@@ -51,8 +43,6 @@ class ShowsController < ApplicationController
     end
   end
 
-  # DELETE /shows/1
-  # DELETE /shows/1.json
   def destroy
     @show.destroy
     respond_to do |format|
@@ -61,13 +51,17 @@ class ShowsController < ApplicationController
     end
   end
 
+  def search
+    client = TvdbClient.new(Rails.application.secrets.TVDB_KEY)
+    client.authenticate
+    @possible_shows = client.search(@show.name)
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_show
       @show = Show.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def show_params
       params.require(:show).permit(:tvdb_id, :name, :season, :episode)
     end
