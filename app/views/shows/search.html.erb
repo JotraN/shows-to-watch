@@ -1,0 +1,11 @@
+<%= form_for @show do |f| %>
+  <% @possible_shows.each do |possible_show| %>
+    <div class="field">
+      <%= f.label :tvdb_id, possible_show["seriesName"] %>
+      <%= f.radio_button :tvdb_id, possible_show["id"] %>
+    </div>
+  <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
