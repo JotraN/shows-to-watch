@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ShowsController, type: :controller do
-
   let(:valid_attributes) {
     {
       name: "scrubs",
@@ -155,5 +154,4 @@ RSpec.describe ShowsController, type: :controller do
       expect(assigns(:possible_shows)).not_to be_nil
     end
   end
-
 end
