@@ -35,5 +35,9 @@ RSpec.describe ShowsController, type: :routing do
       expect(:delete => "/shows/1").to route_to("shows#destroy", :id => "1")
     end
 
+    it "routes to #search" do
+      expect(:get => "/shows/1/search").to route_to("shows#search", :id => "1")
+    end
+
   end
 end

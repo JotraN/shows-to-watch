@@ -63,6 +63,6 @@ class ShowsController < ApplicationController
     end
 
     def show_params
-      params.require(:show).permit(:tvdb_id, :name, :season, :episode)
+      params.require(:show).permit(:tvdb_id, :name, :season, :episode, :banner, :completed)
     end
 end
