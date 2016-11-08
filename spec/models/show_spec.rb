@@ -27,4 +27,12 @@ RSpec.describe Show, type: :model do
     duplicated = @show.dup
     expect(duplicated).to be_valid
   end
+
+  it "sets tvdb id to nil if it is blank" do
+    show = Show.create({
+      name: "Scrubs",
+      tvdb_id: "",
+    })
+    expect(show.tvdb_id).to be_nil
+  end
 end

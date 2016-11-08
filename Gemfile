@@ -23,6 +23,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap-sass', '~> 3.3.7'
 # Use faraday as an HTTP client
 gem 'faraday', '~>0.8.11'
+# Blanks should be null in the database.
+gem 'attribute_normalizer', '~>1.2.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
