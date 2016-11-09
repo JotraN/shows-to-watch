@@ -43,6 +43,7 @@ GEM
     attribute_normalizer (1.2.0)
     autoprefixer-rails (6.5.1.1)
       execjs
+    bcrypt (3.1.11)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -59,6 +60,12 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     debug_inspector (0.0.2)
+    devise (4.2.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0, < 5.1)
+      responders
+      warden (~> 1.2.3)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -94,6 +101,7 @@ GEM
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    orm_adapter (0.5.0)
     pg (0.19.0)
     puma (3.6.0)
     rack (2.0.1)
@@ -130,6 +138,8 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    responders (2.3.0)
+      railties (>= 4.2.0, < 5.1)
     rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -178,6 +188,8 @@ GEM
     uglifier (3.0.3)
       execjs (>= 0.3.0, < 3)
     vcr (3.0.3)
+    warden (1.2.6)
+      rack (>= 1.0)
     web-console (3.4.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -199,6 +211,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.7)
   byebug
   coffee-rails (~> 4.2)
+  devise
   faraday (~> 0.8.11)
   jbuilder (~> 2.5)
   jquery-rails
