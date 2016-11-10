@@ -25,4 +25,9 @@ RSpec.describe "shows/index", type: :view do
     assert_select "div>em", :text => "false".to_s, :count => 2
     assert_select "div>h1", :text => "Name".to_s, :count => 2
   end
+
+  it "renders a sign in if user is not signed in" do
+    render
+    expect(rendered).to match /Sign In/
+  end
 end

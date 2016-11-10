@@ -30,5 +30,10 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
 		<%= link_to 'New Show', new_show_path, class: "btn btn-primary btn-block" %></li>
+    <% if user_signed_in? %>
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-primary btn-block" %></li>
+    <% else %>
+      <%= link_to 'Sign In', new_user_session_path, class: "btn btn-primary btn-block" %></li>
+    <% end %>
   </div>
 </div>
