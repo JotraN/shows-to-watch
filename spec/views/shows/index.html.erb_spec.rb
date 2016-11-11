@@ -30,4 +30,10 @@ RSpec.describe "shows/index", type: :view do
     render
     expect(rendered).to match /Sign In/
   end
+
+  it "renders a sign out if user is signed in" do
+    sign_in User.create(email: "user@email.com", password: "password")
+    render
+    expect(rendered).to match /Sign Out/
+  end
 end

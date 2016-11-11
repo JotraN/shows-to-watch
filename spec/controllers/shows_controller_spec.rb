@@ -39,9 +39,14 @@ RSpec.describe ShowsController, type: :controller do
 
   describe "GET #new" do
     it "assigns a new show as @show" do
-      pending("Sign user in")
+      sign_in User.create(:email => "user@email.com", :password => "password")
       get :new, params: {}, session: valid_session
       expect(assigns(:show)).to be_a_new(Show)
+    end
+
+    it "redirects to sign in if user is not signed in" do
+      get :new, params: {}, session: valid_session
+      expect(response).to redirect_to :new_user_session
     end
   end
 

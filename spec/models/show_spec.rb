@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Show, type: :model do
   before(:each) do
-    @show = Show.create({name: "Scrubs"})
+    @show = Show.create({ name: "Scrubs" })
   end
 
   it "creates a valid show" do
