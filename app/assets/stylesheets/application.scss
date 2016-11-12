@@ -1,20 +1,22 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-html, body {
-  background: black;
-  color: white;
+$navbar-height: 40px;
+
+.container {
   padding-top: 50px;
   padding-bottom: 50px;
 }
 
-a {
-  color: white;
+.navbar-nav > li > a, .navbar-brand {
+  font-size: 12px;
+  height: $navbar-height;
+  padding-top: 11px !important; 
+  padding-bottom: 0 !important;
 }
 
-a:hover {
-  color: grey;
-  text-decoration: none;
+.navbar {
+  min-height: $navbar-height !important;
 }
 
 .show-box {

@@ -1,0 +1,26 @@
+<nav class="navbar navbar-default navbar-fixed-top text-uppercase">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://josephtran.io/">josephtran.io</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="<%= 'active' if current_page? root_path %>"><%= link_to 'Home', root_path %></li>
+        <li class="<%= 'active' if current_page? new_show_path %>"><%= link_to 'Add Show', new_show_path %></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
+        <% else %>
+          <li class="<%= 'active' if current_page? new_user_session_path %>"><%= link_to 'Sign In', new_user_session_path %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
