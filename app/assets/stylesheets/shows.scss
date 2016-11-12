@@ -1,3 +1,18 @@
-// Place all the styles related to the Shows controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$padding: 5px;
+
+.panel a {
+  background: none;
+}
+
+.panel .panel-heading {
+  padding: $padding;
+}
+
+.panel .panel-footer {
+  font-size: 10px;
+  padding: $padding;
+}
+
+.panel .panel-body {
+  padding: 0;
+}
