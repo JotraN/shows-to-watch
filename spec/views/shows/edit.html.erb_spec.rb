@@ -15,13 +15,13 @@ RSpec.describe "shows/edit", type: :view do
 
     assert_select "form[action=?][method=?]", show_path(@show), "post" do
 
-      assert_select "input#show_tvdb_id[name=?]", "show[tvdb_id]"
-
       assert_select "input#show_name[name=?]", "show[name]"
 
       assert_select "input#show_season[name=?]", "show[season]"
 
       assert_select "input#show_episode[name=?]", "show[episode]"
+
+      assert_select "input#show_tvdb_id[name=?]", "show[tvdb_id]"
     end
   end
 end

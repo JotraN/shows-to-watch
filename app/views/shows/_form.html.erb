@@ -11,27 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :tvdb_id %>
-    <%= f.text_field :tvdb_id %>
-  </div>
-
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: "form-control", placeholder: :name, required: true %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :season %>
-    <%= f.number_field :season %>
+    <%= f.number_field :season, class: "form-control", placeholder: :season %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :episode %>
-    <%= f.number_field :episode %>
+    <%= f.number_field :episode, class: "form-control", placeholder: :episode %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :tvdb_id, "TVDB ID" %>
+    <%= f.text_field :tvdb_id, class: "form-control", placeholder: "TVDB ID" %>
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

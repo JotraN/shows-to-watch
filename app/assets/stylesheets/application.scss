@@ -22,3 +22,17 @@ $navbar-height: 40px;
 .navbar {
   min-height: $navbar-height !important;
 }
+
+/* Rails scaffold style compatibility */
+#error_explanation {
+  @extend .alert;
+  @extend .alert-danger;
+  width: inherit;
+}
+
+.field_with_errors {
+  @extend .has-error;
+  background-color: inherit;
+  display: inherit;
+  padding: inherit;
+}
