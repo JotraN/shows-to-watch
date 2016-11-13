@@ -1,10 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe ShowsController, type: :controller do
+  before(:each) do 
+    @user = User.create(:email => "user@email.com", :password => "password")
+    sign_in @user
+  end
+
   let(:valid_attributes) {
     {
       name: "scrubs",
-      tvdb_id: nil,
+      tvdb_id: "123",
       season: 1,
       episode: 1
     }
@@ -39,14 +44,14 @@ RSpec.describe ShowsController, type: :controller do
 
   describe "GET #new" do
     it "assigns a new show as @show" do
-      sign_in User.create(:email => "user@email.com", :password => "password")
       get :new, params: {}, session: valid_session
       expect(assigns(:show)).to be_a_new(Show)
     end
 
-    it "redirects to sign in if user is not signed in" do
+    it "fails the response if user is not signed in" do
+      sign_out @user
       get :new, params: {}, session: valid_session
-      expect(response).to redirect_to :new_user_session
+      expect(response).not_to be_success
     end
   end
 
@@ -55,6 +60,13 @@ RSpec.describe ShowsController, type: :controller do
       show = Show.create! valid_attributes
       get :edit, params: {id: show.to_param}, session: valid_session
       expect(assigns(:show)).to eq(show)
+    end
+
+    it "fails the response if user is not signed in" do
+      sign_out @user
+      show = Show.create! valid_attributes
+      get :edit, params: {id: show.to_param}, session: valid_session
+      expect(response).not_to be_success
     end
   end
 
@@ -72,9 +84,22 @@ RSpec.describe ShowsController, type: :controller do
         expect(assigns(:show)).to be_persisted
       end
 
-      it "redirects to the created show" do
+      it "redirects to the created show if tvdb id exists" do
+        valid_attributes[:tvdb_id] = "123"
         post :create, params: {show: valid_attributes}, session: valid_session
         expect(response).to redirect_to(Show.last)
+      end
+
+      it "fails the response if user is not signed in" do
+        sign_out @user
+        post :create, params: {show: valid_attributes}, session: valid_session
+        expect(response).not_to be_success
+      end
+
+      it "redirects to the search show if no tvdb id" do
+        valid_attributes[:tvdb_id] = nil
+        post :create, params: {show: valid_attributes}, session: valid_session
+        expect(response).to redirect_to(search_show_url(Show.last))
       end
     end
 
@@ -121,6 +146,13 @@ RSpec.describe ShowsController, type: :controller do
         put :update, params: {id: show.to_param, show: valid_attributes}, session: valid_session
         expect(response).to redirect_to(show)
       end
+
+      it "fails the response if user is not signed in" do
+        sign_out @user
+        show = Show.create! valid_attributes
+        put :update, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+        expect(response).not_to be_success
+      end
     end
 
     context "with invalid params" do
@@ -151,6 +183,13 @@ RSpec.describe ShowsController, type: :controller do
       delete :destroy, params: {id: show.to_param}, session: valid_session
       expect(response).to redirect_to(shows_url)
     end
+
+    it "fails the response if user is not signed in" do
+      sign_out @user
+      show = Show.create! valid_attributes
+      delete :destroy, params: {id: show.to_param}, session: valid_session
+      expect(response).not_to be_success
+    end
   end
 
   describe "GET #search", :vcr do
@@ -158,6 +197,13 @@ RSpec.describe ShowsController, type: :controller do
       show = Show.create! valid_attributes
       put :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
       expect(assigns(:possible_shows)).not_to be_nil
+    end
+
+    it "fails the response if user is not signed in" do
+      sign_out @user
+      show = Show.create! valid_attributes
+      put :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+      expect(response).not_to be_success
     end
   end
 end

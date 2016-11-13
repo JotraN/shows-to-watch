@@ -2,6 +2,7 @@ require 'tvdb_client'
 
 class ShowsController < ApplicationController
   before_action :set_show, only: [:show, :edit, :update, :destroy, :search]
+  before_action :authenticate_user!, :except => [:show, :index]
 
   def index
     @shows = Show.all
@@ -11,11 +12,6 @@ class ShowsController < ApplicationController
   end
 
   def new
-    if not user_signed_in?
-      redirect_to new_user_session_path
-      return
-    end
-
     @show = Show.new
   end
 
@@ -27,8 +23,12 @@ class ShowsController < ApplicationController
 
     respond_to do |format|
       if @show.save
-        format.html { redirect_to @show, notice: 'Show was successfully created.' }
-        format.json { render :show, status: :created, location: @show }
+        if @show.tvdb_id
+          format.html { redirect_to @show, notice: 'Show was successfully created.' }
+          format.json { render :show, status: :created, location: @show }
+        else
+          format.html { redirect_to search_show_url(@show), notice: 'Set a tvdb id.' }
+        end
       else
         format.html { render :new }
         format.json { render json: @show.errors, status: :unprocessable_entity }
