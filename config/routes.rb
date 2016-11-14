@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   root 'shows#index'
   resources :shows do
     get "search", on: :member
+    patch "update_tvdb", on: :member
   end
 end

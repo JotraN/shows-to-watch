@@ -16,8 +16,8 @@ RSpec.describe "shows/search", type: :view do
 
   it "renders the search shows form" do
     render
-    assert_select "form[action=?][method=?]", show_path(@show), "post" do
-      assert_select "input#show_tvdb_id[name=?]", "show[tvdb_id]"
+    assert_select "form[action=?][method=?]", update_tvdb_show_path(@show), "post" do
+      assert_select "select#show_tvdb_id[name=?]", "show[tvdb_id]"
     end
   end
 end
