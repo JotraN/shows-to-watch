@@ -3,7 +3,8 @@ require 'tvdb_client'
 class ShowsController < ApplicationController
   before_action :set_show, only: [:show, :edit, :update, :destroy, 
                                   :search, :update_tvdb]
-  before_action :authenticate_user!, :except => [:show, :index]
+  before_action :authenticate_user!, except: [:show, :index]
+  before_action :authenticate_admin!, except: [:show, :index]
 
   def index
     @shows = Show.all
@@ -97,5 +98,12 @@ class ShowsController < ApplicationController
 
     def show_params
       params.require(:show).permit(:tvdb_id, :name, :season, :episode, :banner, :completed)
+    end
+
+    def authenticate_admin!
+      if not current_user.admin?
+        redirect_to shows_url, alert: "Only admins can do that."
+        return
+      end
     end
 end

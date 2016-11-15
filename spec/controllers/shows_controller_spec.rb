@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ShowsController, type: :controller do
   before(:each) do 
-    @user = User.create(:email => "user@email.com", :password => "password")
+    @user = User.create(:email => "user@email.com", :password => "password", :admin => true)
     sign_in @user
   end
 
@@ -53,6 +53,13 @@ RSpec.describe ShowsController, type: :controller do
       get :new, params: {}, session: valid_session
       expect(response).not_to be_success
     end
+
+    it "redirects to shows if user is not admin" do
+      @user.admin = false
+      @user.save
+      get :new, params: {}, session: valid_session
+      expect(response).to redirect_to(shows_url)
+    end
   end
 
   describe "GET #edit" do
@@ -67,6 +74,14 @@ RSpec.describe ShowsController, type: :controller do
       show = Show.create! valid_attributes
       get :edit, params: {id: show.to_param}, session: valid_session
       expect(response).not_to be_success
+    end
+
+    it "redirects to shows if user is not admin" do
+      @user.admin = false
+      @user.save
+      show = Show.create! valid_attributes
+      get :edit, params: {id: show.to_param}, session: valid_session
+      expect(response).to redirect_to(shows_url)
     end
   end
 
@@ -100,6 +115,13 @@ RSpec.describe ShowsController, type: :controller do
         valid_attributes[:tvdb_id] = nil
         post :create, params: {show: valid_attributes}, session: valid_session
         expect(response).to redirect_to(search_show_url(Show.last))
+      end
+
+      it "redirects to shows if user is not admin" do
+        @user.admin = false
+        @user.save
+        post :create, params: {show: valid_attributes}, session: valid_session
+        expect(response).to redirect_to(shows_url)
       end
     end
 
@@ -153,6 +175,14 @@ RSpec.describe ShowsController, type: :controller do
         put :update, params: {id: show.to_param, show: valid_attributes}, session: valid_session
         expect(response).not_to be_success
       end
+
+      it "redirects to shows if user is not admin" do
+        @user.admin = false
+        @user.save
+        show = Show.create! valid_attributes
+        put :update, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+        expect(response).to redirect_to(shows_url)
+      end
     end
 
     context "with invalid params" do
@@ -190,6 +220,14 @@ RSpec.describe ShowsController, type: :controller do
       delete :destroy, params: {id: show.to_param}, session: valid_session
       expect(response).not_to be_success
     end
+    
+    it "redirects to shows if user is not admin" do
+      @user.admin = false
+      @user.save
+      show = Show.create! valid_attributes
+      delete :destroy, params: {id: show.to_param}, session: valid_session
+      expect(response).to redirect_to(shows_url)
+    end
   end
 
   describe "GET #search", :vcr do
@@ -204,6 +242,14 @@ RSpec.describe ShowsController, type: :controller do
       show = Show.create! valid_attributes
       put :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
       expect(response).not_to be_success
+    end
+
+    it "redirects to shows if user is not admin" do
+      @user.admin = false
+      @user.save
+      show = Show.create! valid_attributes
+      put :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+      expect(response).to redirect_to(shows_url)
     end
   end
 
@@ -224,6 +270,16 @@ RSpec.describe ShowsController, type: :controller do
       expect(show.name).to eq(tvdb_json[:seriesName])
       expect(show.tvdb_id).to eq(tvdb_json[:id])
       expect(show.banner).to eq(tvdb_json[:banner])
+    end
+
+    it "redirects to shows if user is not admin" do
+      @user.admin = false
+      @user.save
+      valid_attributes[:tvdb_id] = tvdb_json.to_json
+      show = Show.create! valid_attributes
+      put :update_tvdb, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+      put :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+      expect(response).to redirect_to(shows_url)
     end
   end
 end
