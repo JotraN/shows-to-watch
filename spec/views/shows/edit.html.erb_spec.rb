@@ -17,6 +17,8 @@ RSpec.describe "shows/edit", type: :view do
       assert_select "input#show_name[name=?]", "show[name]"
       assert_select "input#show_season[name=?]", "show[season]"
       assert_select "input#show_episode[name=?]", "show[episode]"
+      assert_select "input#show_completed[name=?]", "show[completed]"
+      assert_select "a[href]", :text => "Set TVDB Info", :count => 1
     end
   end
 end

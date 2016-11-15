@@ -206,4 +206,24 @@ RSpec.describe ShowsController, type: :controller do
       expect(response).not_to be_success
     end
   end
+
+  describe "PUT #update_tvdb" do
+    let(:tvdb_json) {
+      {
+        seriesName: "Scrubs",
+        id: "76156",
+        banner: "banner.jpg"
+      }
+    }
+
+    it "updates the show's info using the tvdb json" do
+      valid_attributes[:tvdb_id] = tvdb_json.to_json
+      show = Show.create! valid_attributes
+      put :update_tvdb, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+      show.reload
+      expect(show.name).to eq(tvdb_json[:seriesName])
+      expect(show.tvdb_id).to eq(tvdb_json[:id])
+      expect(show.banner).to eq(tvdb_json[:banner])
+    end
+  end
 end
