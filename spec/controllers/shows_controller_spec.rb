@@ -40,6 +40,20 @@ RSpec.describe ShowsController, type: :controller do
       get :show, params: {id: show.to_param}, session: valid_session
       expect(assigns(:show)).to eq(show)
     end
+
+    it "redirects to tvdb show site" do
+      show = Show.create! valid_attributes
+      get :show, params: {id: show.to_param}, session: valid_session
+      expect(response).to redirect_to("http://thetvdb.com/?tab=series&id=#{ show.tvdb_id }")
+    end
+
+    it "redirects to the search show if no tvdb id" do
+      show = Show.create! valid_attributes
+      show.tvdb_id = nil
+      show.save
+      get :show, params: {id: show.to_param}, session: valid_session
+      expect(response).to redirect_to(search_show_url(show))
+    end
   end
 
   describe "GET #new" do
@@ -99,10 +113,10 @@ RSpec.describe ShowsController, type: :controller do
         expect(assigns(:show)).to be_persisted
       end
 
-      it "redirects to the created show if tvdb id exists" do
+      it "redirects to shows if tvdb id exists" do
         valid_attributes[:tvdb_id] = "123"
         post :create, params: {show: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Show.last)
+        expect(response).to redirect_to(shows_url)
       end
 
       it "fails the response if user is not signed in" do
@@ -163,10 +177,10 @@ RSpec.describe ShowsController, type: :controller do
         expect(assigns(:show)).to eq(show)
       end
 
-      it "redirects to the show" do
+      it "redirects shows" do
         show = Show.create! valid_attributes
         put :update, params: {id: show.to_param, show: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(show)
+        expect(response).to redirect_to(shows_url)
       end
 
       it "fails the response if user is not signed in" do
@@ -279,6 +293,14 @@ RSpec.describe ShowsController, type: :controller do
       show = Show.create! valid_attributes
       put :update_tvdb, params: {id: show.to_param, show: valid_attributes}, session: valid_session
       put :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+      expect(response).to redirect_to(shows_url)
+    end
+
+    it "redirects to shows after updating" do
+      valid_attributes[:tvdb_id] = tvdb_json.to_json
+      show = Show.create! valid_attributes
+      put :update_tvdb, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+      show.reload
       expect(response).to redirect_to(shows_url)
     end
   end

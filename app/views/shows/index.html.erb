@@ -7,7 +7,7 @@
   </div>
 </div>
 <div class="row">
-  <% @shows.each_with_index do |show, index| %>
+  <% @shows.sort_by { |show| show.updated_at }.reverse.each_with_index do |show, index| %>
     <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-default">
         <div class="panel-heading">

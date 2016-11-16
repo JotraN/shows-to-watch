@@ -11,6 +11,11 @@ class ShowsController < ApplicationController
   end
 
   def show
+    if @show.tvdb_id
+      redirect_to "http://thetvdb.com/?tab=series&id=#{ @show.tvdb_id }"
+    else
+      redirect_to search_show_url(@show), notice: 'Set a tvdb id.'
+    end
   end
 
   def new
@@ -26,8 +31,8 @@ class ShowsController < ApplicationController
     respond_to do |format|
       if @show.save
         if @show.tvdb_id
-          format.html { redirect_to @show, notice: 'Show was successfully created.' }
-          format.json { render :show, status: :created, location: @show }
+          format.html { redirect_to shows_url, notice: 'Show was successfully created.' }
+          format.json { render shows_url, status: :created, location: @show }
         else
           format.html { redirect_to search_show_url(@show), notice: 'Set a tvdb id.' }
         end
@@ -42,8 +47,8 @@ class ShowsController < ApplicationController
     respond_to do |format|
       if @show.update(show_params)
         if @show.tvdb_id
-          format.html { redirect_to @show, notice: 'Show was successfully updated.' }
-          format.json { render :show, status: :ok, location: @show }
+          format.html { redirect_to shows_url, notice: 'Show was successfully updated.' }
+          format.json { render shows_url, status: :ok, location: @show }
         else
           format.html { redirect_to search_show_url(@show), notice: 'Set a tvdb id.' }
         end
@@ -82,8 +87,8 @@ class ShowsController < ApplicationController
         @show.name = tvdb_data["seriesName"]
         @show.banner = tvdb_data["banner"]
         @show.save
-        format.html { redirect_to @show, notice: "TVDB info was successfully set." }
-        format.json { render :show, status: :ok, location: @show }
+        format.html { redirect_to shows_url, notice: "TVDB info was successfully set." }
+        format.json { render shows_url, status: :ok, location: @show }
       else
         format.html { render :edit }
         format.json { render json: @show.errors, status: :unprocessable_entity }

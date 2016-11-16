@@ -2,5 +2,5 @@
 
 <%= render 'form', show: @show %>
 <hr>
-<%= link_to 'Cancel', @show, class: "btn btn-warning" %>
+<%= link_to 'Cancel', shows_path, class: "btn btn-warning" %>
 <%= link_to 'Delete Show', @show, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
