@@ -1,6 +1,6 @@
-<h1>Editing Show</h1>
+<h1>Editing <%= @show.name %> Info</h1>
 
 <%= render 'form', show: @show %>
-
-<%= link_to 'Show', @show %> |
-<%= link_to 'Back', shows_path %>
+<hr>
+<%= link_to 'Cancel', @show, class: "btn btn-warning" %>
+<%= link_to 'Delete Show', @show, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>

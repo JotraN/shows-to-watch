@@ -12,13 +12,17 @@ RSpec.describe "shows/edit", type: :view do
 
   it "renders the edit show form" do
     render
-
     assert_select "form[action=?][method=?]", show_path(@show), "post" do
       assert_select "input#show_name[name=?]", "show[name]"
       assert_select "input#show_season[name=?]", "show[season]"
       assert_select "input#show_episode[name=?]", "show[episode]"
       assert_select "input#show_completed[name=?]", "show[completed]"
-      assert_select "a[href]", :text => "Set TVDB Info", :count => 1
+      assert_select "a[href=?]", "/shows/#{ @show.id }/search"
     end
+  end
+
+  it "renders the delete button" do
+    render
+    assert_select "a[href=?]", "/shows/#{ @show.id }"
   end
 end
