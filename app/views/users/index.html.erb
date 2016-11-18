@@ -1,0 +1,20 @@
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>Email</td>
+      <td>User Group</td>
+      <td>Created Date</td>
+      <td>Delete</td>
+    </tr>
+  </thead>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.email %></td>
+      <td><%= user.admin ? "Admin" : "User" %></td>
+      <td><%= user.created_at %></td>
+      <td><%= link_to "Delete", user, data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %></td>
+    </tr>
+  <% end %>
+</table>
