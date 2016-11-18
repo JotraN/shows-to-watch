@@ -8,6 +8,10 @@ class UsersController < ApplicationController
   end
 
   def update
+    if @user.admin? and @user != current_user
+      redirect_to users_url, alert: "Can't edit other admins."
+      return
+    end
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to users_url, notice: 'User was successfully updated.' }
@@ -20,6 +24,10 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    if @user.admin? and @user != current_user
+      redirect_to users_url, alert: "Can't edit other admins."
+      return
+    end
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }

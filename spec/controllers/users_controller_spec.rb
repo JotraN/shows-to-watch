@@ -50,6 +50,21 @@ RSpec.describe UsersController, type: :controller do
       expect(user.admin).to eq(new_attributes[:admin])
     end
 
+    it "does not update if the requested user is an admin and not the current user" do
+      user = User.create! valid_attributes
+      user.admin = true
+      user.save
+      put :update, params: {id: user.to_param, user: new_attributes}
+      user.reload
+      expect(user.email).to eq(valid_attributes[:email])
+    end
+
+    it "updates the requested user is an admin and the current user" do
+      put :update, params: {id: @user.to_param, user: new_attributes}
+      @user.reload
+      expect(@user.email).to eq(new_attributes[:email])
+    end
+
     it "assigns the requested user as @show" do
       user = User.create! valid_attributes
       put :update, params: {id: user.to_param, user: valid_attributes}
@@ -85,6 +100,22 @@ RSpec.describe UsersController, type: :controller do
         delete :destroy, params: {id: user.to_param}
       }.to change(User, :count).by(-1)
     end
+
+    it "does not destroy if the requested user is an admin and not the current user" do
+      user = User.create! valid_attributes
+      user.admin = true
+      user.save
+      expect {
+        delete :destroy, params: {id: user.to_param}
+      }.to change(User, :count).by(0)
+    end
+
+    it "destroys the requested user is an admin and the current user" do
+      expect {
+        delete :destroy, params: {id: @user.to_param}
+      }.to change(User, :count).by(-1)
+    end
+
 
     it "redirects to the users list" do
       user = User.create! valid_attributes

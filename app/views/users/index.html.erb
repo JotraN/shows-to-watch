@@ -3,18 +3,23 @@
     <tr>
       <td>#</td>
       <td>Email</td>
-      <td>User Group</td>
-      <td>Created Date</td>
+      <td>Created At</td>
+      <td>Role</td>
       <td>Delete</td>
     </tr>
   </thead>
-  <% @users.each do |user| %>
+  <% @users.sort{ |u| u.id  }.each do |user| %>
     <tr>
       <td><%= user.id %></td>
       <td><%= user.email %></td>
-      <td><%= user.admin ? "Admin" : "User" %></td>
       <td><%= user.created_at %></td>
-      <td><%= link_to "Delete", user, data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %></td>
+      <% if user.admin? %>
+        <td><%= link_to "Admin", "#", class: "btn btn-warning", disabled: "disabled" %></td>
+        <td><%= link_to "Delete", "#", class: "btn btn-danger", disabled: "disabled" %></td>
+      <% else %>
+        <td><%= link_to "User", user_path(id: user.id, user: { admin: true }), data: { confirm: "Change to admin?" }, method: :put, class: "btn btn-warning" %></td>
+        <td><%= link_to "Delete", user, data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
