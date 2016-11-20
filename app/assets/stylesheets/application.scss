@@ -40,3 +40,18 @@ $navbar-height: 40px;
 .btn {
   margin-bottom: 15px;
 }
+
+.footer {
+  background-color: #f8f8f8;
+  border-top: 1px solid #e7e7e7;
+  width: 100%;
+}
+
+.footer .container {
+  padding: 5px;
+  width: auto;
+}
+
+.footer .container a {
+  color: grey;
+}
