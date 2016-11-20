@@ -18,6 +18,8 @@
         <% if user_signed_in? %>
           <% if current_user.admin? %>
             <li><%= link_to "Admin Tools", users_path %></li>
+          <% else %>
+            <li><%= link_to "Request Admin", user_request_admin_path %></li>
           <% end %>
           <li><%= link_to "Account", edit_user_registration_path %></li>
           <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>

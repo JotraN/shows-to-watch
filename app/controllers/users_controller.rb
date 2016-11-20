@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:update, :destroy]
   before_action :authenticate_user!
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, except: :request_admin
 
   def index
     @users = User.all
@@ -33,6 +33,15 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def request_admin
+    if current_user.admin?
+      redirect_to shows_url, alert: 'You are already an admin.'
+      return
+    end
+    UserMailer.request_admin(current_user).deliver
+    redirect_to(shows_url, :notice => 'Admin request sent.')
   end
 
   private
