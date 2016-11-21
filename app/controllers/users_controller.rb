@@ -14,6 +14,9 @@ class UsersController < ApplicationController
     end
     respond_to do |format|
       if @user.update(user_params)
+        if user_params[:admin]
+          UserMailer.grant_admin(@user).deliver
+        end
         format.html { redirect_to users_url, notice: 'User was successfully updated.' }
         format.json { render users_url, status: :ok, location: @show }
       else
