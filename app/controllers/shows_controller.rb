@@ -3,8 +3,8 @@ require 'tvdb_client'
 class ShowsController < ApplicationController
   before_action :set_show, only: [:show, :edit, :update, :destroy, 
                                   :search, :update_tvdb]
-  before_action :authenticate_user!, except: [:show, :index]
-  before_action :authenticate_admin!, except: [:show, :index]
+  before_action :authenticate_user!, except: [:show, :index, :abandoned]
+  before_action :authenticate_admin!, except: [:show, :index, :abandoned]
 
   def index
     @shows = Show.all
@@ -85,6 +85,7 @@ class ShowsController < ApplicationController
         tvdb_data = JSON.parse(@show.tvdb_id)
         @show.tvdb_id = tvdb_data["id"]
         @show.name = tvdb_data["seriesName"]
+        # TODO Assumes this exists.
         @show.banner = tvdb_data["banner"]
         @show.save
         format.html { redirect_to shows_url, notice: "TVDB info was successfully set." }
@@ -94,6 +95,10 @@ class ShowsController < ApplicationController
         format.json { render json: @show.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def abandoned
+    @shows = Show.where(abandoned: true)
   end
 
   private

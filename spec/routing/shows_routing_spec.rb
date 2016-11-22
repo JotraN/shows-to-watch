@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe ShowsController, type: :routing do
   describe "routing" do
-
     it "routes to #index" do
       expect(:get => "/shows").to route_to("shows#index")
     end
@@ -39,5 +38,12 @@ RSpec.describe ShowsController, type: :routing do
       expect(:get => "/shows/1/search").to route_to("shows#search", :id => "1")
     end
 
+    it "routes to #update via PATCH" do
+      expect(:patch => "/shows/1/update_tvdb").to route_to("shows#update_tvdb", :id => "1")
+    end
+
+    it "routes to #abandoned" do
+      expect(:get => "/shows/abandoned").to route_to("shows#abandoned")
+    end
   end
 end

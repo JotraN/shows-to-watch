@@ -304,4 +304,18 @@ RSpec.describe ShowsController, type: :controller do
       expect(response).to redirect_to(shows_url)
     end
   end
+
+  describe "GET #abandoned" do
+    it "assigns abandoned shows as @shows" do
+      show = Show.create! valid_attributes
+      show.abandoned = true
+      show.save
+      get :abandoned, params: {}, session: valid_session
+      expect(assigns(:shows)).to eq([show])
+      show.abandoned = false
+      show.save
+      get :abandoned, params: {}, session: valid_session
+      expect(assigns(:shows)).to eq([])
+    end
+  end
 end

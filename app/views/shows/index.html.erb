@@ -6,35 +6,4 @@
     </p>
   </div>
 </div>
-<div class="row">
-  <% @shows.sort_by { |show| show.updated_at }.reverse.each_with_index do |show, index| %>
-    <div class="col-md-6 col-md-offset-3">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h1 class="panel-title">
-            <%= link_to show.name, show %>
-            <small><%= link_to 'Edit', edit_show_path(show), class: "pull-right" %></small>
-          </h1>
-        </div>
-        <div class="panel-body">
-          <%= link_to show do %>
-            <% if show.banner %>
-              <%= image_tag "http://thetvdb.com/banners/" + show.banner, class: "img-responsive" %>
-            <% else %>
-              <%= image_tag "default_image.png", class: "img-responsive" %>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="panel-footer text-uppercase">
-          <span>
-            <strong>Season:</strong> <em><%= show.season || "N/A" %></em>
-            <strong>Episode:</strong> <em><%= show.episode || "N/A" %></em>
-          </span>
-          <span class="pull-right">
-            <strong>Completed:</strong> <em><%= show.completed %></em>
-          </span>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
+<%= render 'shows_list', shows: @shows %>
