@@ -27,10 +27,18 @@ RSpec.describe ShowsController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
-    it "assigns all shows as @shows" do
+    it "assigns only non-abandoned shows as @shows" do
       show = Show.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(assigns(:shows)).to eq([show])
+    end
+
+    it "does not assign only abandoned shows as @shows" do
+      show = Show.create! valid_attributes
+      show.abandoned = true
+      show.save
+      get :index, params: {}, session: valid_session
+      expect(assigns(:shows)).to eq([])
     end
   end
 

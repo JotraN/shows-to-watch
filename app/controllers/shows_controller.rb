@@ -7,7 +7,7 @@ class ShowsController < ApplicationController
   before_action :authenticate_admin!, except: [:show, :index, :abandoned]
 
   def index
-    @shows = Show.all
+    @shows = Show.where(abandoned: false)
   end
 
   def show
@@ -107,7 +107,8 @@ class ShowsController < ApplicationController
     end
 
     def show_params
-      params.require(:show).permit(:tvdb_id, :name, :season, :episode, :banner, :completed)
+      params.require(:show).permit(:tvdb_id, :name, :season, :episode, :banner, 
+                                   :completed, :abandoned)
     end
 
     def authenticate_admin!
