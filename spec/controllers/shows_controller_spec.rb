@@ -326,4 +326,13 @@ RSpec.describe ShowsController, type: :controller do
       expect(assigns(:shows)).to eq([])
     end
   end
+
+  describe "GET #index.json" do
+    it "serves all shows from index as a json" do
+      show = Show.create! valid_attributes
+      get :index, format: :json
+      expect(response.content_type).to eq("application/json")
+      expect(response.body).to eq([show].to_json)
+    end
+  end
 end

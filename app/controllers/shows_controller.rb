@@ -8,6 +8,10 @@ class ShowsController < ApplicationController
 
   def index
     @shows = Show.where(abandoned: false)
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @shows }
+    end
   end
 
   def show
