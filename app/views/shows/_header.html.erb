@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="header text-center">
+    <%= image_tag "dark_tvdb_logo.png", class: "header-image" %>
+    <% title = "Shows to Watch" if local_assigns[:title].nil? %>
+    <h1 class="header-text"><%= title %></h1>
+    <% if !local_assigns[:subtext].nil? %>
+      <small><%= subtext %></small>
+    <% end %>
+  </div>
+</div>

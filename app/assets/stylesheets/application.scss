@@ -5,7 +5,16 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+$navbar-background: #222;
+$navbar-border: #090909;
 $navbar-height: 40px;
+$chrome-dark-gray: #323232;
+$chrome-gray: #d6d6d6;
+
+body {
+  background: $chrome-dark-gray;
+  color: $chrome-gray;
+}
 
 .container {
   padding-top: 70px;
@@ -42,8 +51,8 @@ $navbar-height: 40px;
 }
 
 .footer {
-  background-color: #f8f8f8;
-  border-top: 1px solid #e7e7e7;
+  background: $navbar-background;
+  border-top: 1px solid $navbar-border;
   width: 100%;
 }
 
@@ -52,6 +61,10 @@ $navbar-height: 40px;
   width: auto;
 }
 
-.footer .container a {
-  color: grey;
+.footer a {
+  color: gray;
+}
+
+select {
+  background: $chrome-dark-gray;
 }

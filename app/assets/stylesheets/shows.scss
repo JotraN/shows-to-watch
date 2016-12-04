@@ -1,14 +1,65 @@
 $padding: 5px;
+$show-size: 140px;
 
-.panel .panel-heading {
-  padding: $padding;
+.header {
+  min-width: 100%;
+  margin-bottom: 30px;
 }
 
-.panel .panel-footer {
-  font-size: 10px;
-  padding: $padding;
+.header-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75px;
 }
 
-.panel .panel-body {
-  padding: 0;
+.header-text {
+  margin-top: 10px;
+  font-weight: 100;
+}
+
+.show-container {
+  height: $show-size;
+  width: $show-size;
+  overflow: hidden;
+  border: 3px dotted gray;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.show-container img {
+  height: 140px;
+  width: 758px;
+  margin: 0 0 0 -310px;
+  opacity: 0.8;
+}
+
+.show-overlay {
+  background: black;
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+}
+
+.show-overlay:hover {
+  opacity: 0.8;
+}
+
+.show-title {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.show-title a {
+  color: white;
+}
+
+.show-title a:hover {
+  color:gray;
+  text-decoration: none;
 }

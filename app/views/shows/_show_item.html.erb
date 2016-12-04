@@ -1,0 +1,14 @@
+<div class="show-container img-circle">
+  <% if show.banner %>
+    <%= image_tag "http://thetvdb.com/banners/#{ show.banner }" %>
+  <% else %>
+    <%= image_tag "default_image.png" %>
+  <% end %>
+  <div class="show-overlay text-center">
+    <div class="show-title">
+      <p><small><%= "s#{ show.season } e#{ show.episode }" %></small></p>
+      <p><strong><%= link_to show.name, show %></strong></p>
+      <p><small><%= link_to 'edit', edit_show_path(show) %></small></p>
+    </div>
+  </div>
+</div>
