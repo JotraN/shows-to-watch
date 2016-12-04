@@ -27,18 +27,10 @@ RSpec.describe ShowsController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
-    it "assigns only non-abandoned shows as @shows" do
+    it "assigns shows as @shows" do
       show = Show.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(assigns(:shows)).to eq([show])
-    end
-
-    it "does not assign only abandoned shows as @shows" do
-      show = Show.create! valid_attributes
-      show.abandoned = true
-      show.save
-      get :index, params: {}, session: valid_session
-      expect(assigns(:shows)).to eq([])
     end
   end
 
@@ -323,6 +315,44 @@ RSpec.describe ShowsController, type: :controller do
       show.abandoned = false
       show.save
       get :abandoned, params: {}, session: valid_session
+      expect(assigns(:shows)).to eq([])
+    end
+  end
+
+  describe "GET #completed" do
+    it "assigns completed shows as @shows" do
+      show = Show.create! valid_attributes
+      show.completed = true
+      show.save
+      get :completed, params: {}, session: valid_session
+      expect(assigns(:shows)).to eq([show])
+      show.completed = false
+      show.save
+      get :completed, params: {}, session: valid_session
+      expect(assigns(:shows)).to eq([])
+    end
+  end
+
+  describe "GET #in_progress" do
+    it "assigns only non-abandoned and non-completed shows as @shows" do
+      show = Show.create! valid_attributes
+      get :in_progress, params: {}, session: valid_session
+      expect(assigns(:shows)).to eq([show])
+    end
+
+    it "does not assign abandoned shows as @shows" do
+      show = Show.create! valid_attributes
+      show.abandoned = true
+      show.save
+      get :in_progress, params: {}, session: valid_session
+      expect(assigns(:shows)).to eq([])
+    end
+
+    it "does not assign completed shows as @shows" do
+      show = Show.create! valid_attributes
+      show.completed = true
+      show.save
+      get :in_progress, params: {}, session: valid_session
       expect(assigns(:shows)).to eq([])
     end
   end

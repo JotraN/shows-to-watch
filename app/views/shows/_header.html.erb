@@ -1,10 +1,9 @@
 <div class="row">
   <div class="header text-center">
     <%= image_tag "dark_tvdb_logo.png", class: "header-image" %>
-    <% title = "Shows to Watch" if local_assigns[:title].nil? %>
+    <% title = "All Shows" if local_assigns[:title].nil? %>
     <h1 class="header-text"><%= title %></h1>
-    <% if !local_assigns[:subtext].nil? %>
-      <small><%= subtext %></small>
-    <% end %>
+    <% subtext = "Hello, these are all the shows I've kept track of." if local_assigns[:subtext].nil? %>
+    <small><%= subtext %></small>
   </div>
 </div>

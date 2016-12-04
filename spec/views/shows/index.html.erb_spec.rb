@@ -21,9 +21,7 @@ RSpec.describe "shows/index", type: :view do
   it "renders a list of shows" do
     render
     assert_select "a[href]", :text => "Name".to_s, :count => 2
-    assert_select "span>em", :text => "2", :count => 2
-    assert_select "span>em", :text => "3", :count => 2
-    assert_select "span>em", :text => "false".to_s, :count => 2
-    assert_select "a[href]", "Edit", :count => 2
+    assert_select "p>small", :text => "s2 e3", :count => 2
+    assert_select "a[href]", "edit", :count => 2
   end
 end

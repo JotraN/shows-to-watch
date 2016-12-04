@@ -11,9 +11,16 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="<%= 'active' if current_page? root_path %>"><%= link_to "Shows", root_path %></li>
+        <li class="dropdown-inverse">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shows<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="<%= 'active' if current_page? shows_path %>"><%= link_to "All", shows_path %></li>
+            <li class="<%= 'active' if current_page? shows_in_progress_path or current_page? root_path %>"><%= link_to "In Progress", shows_in_progress_path %></li>
+            <li class="<%= 'active' if current_page? shows_abandoned_path %>"><%= link_to "Abandoned", shows_abandoned_path %></li>
+            <li class="<%= 'active' if current_page? shows_completed_path %>"><%= link_to "Completed", shows_completed_path %></li>
+          </ul>
+        </li>
         <li class="<%= 'active' if current_page? new_show_path %>"><%= link_to "Add Show", new_show_path %></li>
-        <li class="<%= 'active' if current_page? shows_abandoned_path %>"><%= link_to "Abandoned", shows_abandoned_path %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>

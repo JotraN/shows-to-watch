@@ -3,11 +3,13 @@ require 'tvdb_client'
 class ShowsController < ApplicationController
   before_action :set_show, only: [:show, :edit, :update, :destroy, 
                                   :search, :update_tvdb]
-  before_action :authenticate_user!, except: [:show, :index, :abandoned]
-  before_action :authenticate_admin!, except: [:show, :index, :abandoned]
+  before_action :authenticate_user!, except: [:show, :index, 
+                                              :abandoned, :completed]
+  before_action :authenticate_admin!, except: [:show, :index, 
+                                               :abandoned, :completed]
 
   def index
-    @shows = Show.where(abandoned: false)
+    @shows = Show.all
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @shows }
@@ -103,6 +105,23 @@ class ShowsController < ApplicationController
 
   def abandoned
     @shows = Show.where(abandoned: true)
+    @title = "Shows I've Abandoned"
+    @subtext = "Hello, these are shows I've abandoned."
+    render :index
+  end
+
+  def completed
+    @shows = Show.where(completed: true)
+    @title = "Shows I've Completed"
+    @subtext = "Hello, these are shows I've completed watching."
+    render :index
+  end
+
+  def in_progress
+    @shows = Show.where(abandoned: false, completed: false)
+    @title = "Shows to Watch"
+    @subtext = "Hello, these are shows I am currently watching."
+    render :index
   end
 
   private

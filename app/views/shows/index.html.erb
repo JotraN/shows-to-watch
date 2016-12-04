@@ -1,5 +1,2 @@
-<%= render "header", 
-  title: "Shows to Watch",
-  subtext: "Hello, these are shows I am currently watching."
-%>
+<%= render "header", title: @title, subtext: @subtext %>
 <%= render 'shows_list', shows: @shows %>
