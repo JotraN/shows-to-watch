@@ -3,10 +3,10 @@ require 'tvdb_client'
 class ShowsController < ApplicationController
   before_action :set_show, only: [:show, :edit, :update, :destroy, 
                                   :search, :update_tvdb]
-  before_action :authenticate_user!, except: [:show, :index, 
-                                              :abandoned, :completed]
-  before_action :authenticate_admin!, except: [:show, :index, 
-                                               :abandoned, :completed]
+  before_action :authenticate_user!, except: [:show, :index, :abandoned, 
+                                              :completed, :in_progress]
+  before_action :authenticate_admin!, except: [:show, :index, :abandoned, 
+                                               :completed, :in_progress]
 
   def index
     @shows = Show.all

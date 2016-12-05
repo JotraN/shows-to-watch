@@ -32,6 +32,26 @@ body {
   min-height: $navbar-height !important;
 }
 
+.navbar .dropdown-menu {
+  background: $navbar-background;
+  border-color: $navbar-border;
+  font-size: 12px;
+}
+
+.navbar .dropdown-menu a {
+  color: gray;
+}
+
+.navbar .dropdown-menu a:hover {
+  background: black;
+  color: white;
+}
+
+.navbar .dropdown-menu .active a {
+  background: black;
+  color: white;
+}
+
 /* Rails scaffold style compatibility */
 #error_explanation {
   @extend .alert;
