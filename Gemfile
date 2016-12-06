@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 # Use postgresql as the database for Active Record
@@ -27,6 +26,8 @@ gem 'faraday', '~>0.8.11'
 gem 'attribute_normalizer', '~>1.2.0'
 # Use Devise for authentication.
 gem 'devise'
+# Use simple token authentication to authenticate with tokens.
+gem 'simple_token_authentication', '~> 1.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

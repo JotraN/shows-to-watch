@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users, only: [:index, :update, :destroy]
   get "/users/request_admin", to: "users#request_admin", as: "user_request_admin"
+  get "/users/request_token", to: "users#request_token", as: "user_request_token"
 
   get "/shows/abandoned", to: "shows#abandoned", as: "shows_abandoned"
   get "/shows/completed", to: "shows#completed", as: "shows_completed"

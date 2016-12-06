@@ -138,4 +138,38 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to redirect_to(shows_url)
     end
   end
+
+  describe "GET #request_admin" do
+    it "fails the response if user is not signed in" do
+      sign_out @user
+      get :request_admin
+      expect(response).not_to be_success
+    end
+
+    it "redirects to shows" do
+      get :request_admin
+      expect(response).to redirect_to(shows_url)
+    end
+
+    it "redirects to shows if user is already admin" do
+      @user.admin = true
+      @user.save
+      get :request_admin
+      expect(response).to redirect_to(shows_url)
+    end
+  end
+
+  describe "GET #request_token" do
+    it "fails the response if user is not signed in" do
+      sign_out @user
+      get :request_token, format: :json
+      expect(response).not_to be_success
+    end
+
+    it "gets the token for the current user" do
+      get :request_token, format: :json
+      expect(response.content_type).to eq("application/json")
+      expect(response.body).to eq({ token: @user.authentication_token }.to_json)
+    end
+  end
 end
