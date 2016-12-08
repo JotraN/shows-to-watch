@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:update, :destroy]
   before_action :authenticate_user!
-  before_action :authenticate_admin!, except: :request_admin
+  before_action :authenticate_admin!, except: [:request_admin, :request_token]
 
   def index
     @users = User.all
