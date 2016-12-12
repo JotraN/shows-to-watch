@@ -30,6 +30,47 @@ class Api::ShowsController < Api::ApiController
     render_json_only(@shows)
   end
 
+  def create
+    @show = Show.new(show_params)
+    if @show.save
+      if @show.tvdb_id
+        render_json_only(@show)
+      else
+        redirect_to search_api_show_url(@show)
+      end
+    else
+      render_json_only(@show.errors)
+    end
+  end
+
+  def search
+    client = TvdbClient.new(Rails.application.secrets.TVDB_KEY)
+    client.authenticate
+    begin
+      @possible_shows = client.search(@show.name)
+      render_json_only(@possible_shows)
+    rescue ArgumentError
+      render_json_only({ error: "Show not found at the TVDB" })
+    end
+  end
+
+  def update
+    if @show.update(show_params)
+      if @show.tvdb_id
+        render_json_only(@show)
+      else
+        redirect_to search_api_show_url(@show)
+      end
+    else
+      render_json_only(@show.errors)
+    end
+  end
+
+  def destroy
+    @show.destroy
+    render_json_only({ success: "Show was deleted." })
+  end
+
   private
     def render_json_only(json)
       respond_to do |format|
@@ -49,7 +90,7 @@ class Api::ShowsController < Api::ApiController
 
     def authenticate_admin!
       if not current_user.admin?
-        redirect_to shows_url, alert: "Only admins can do that."
+        render_json_only(error: "Admin action only.")
         return
       end
     end
