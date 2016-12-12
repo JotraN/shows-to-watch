@@ -247,14 +247,14 @@ RSpec.describe ShowsController, type: :controller do
   describe "GET #search", :vcr do
     it "assigns the list of possible tvdb shows as @possible_shows" do
       show = Show.create! valid_attributes
-      put :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+      get :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
       expect(assigns(:possible_shows)).not_to be_nil
     end
 
     it "fails the response if user is not signed in" do
       sign_out @user
       show = Show.create! valid_attributes
-      put :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+      get :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
       expect(response).not_to be_success
     end
 
@@ -262,7 +262,7 @@ RSpec.describe ShowsController, type: :controller do
       @user.admin = false
       @user.save
       show = Show.create! valid_attributes
-      put :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
+      get :search, params: {id: show.to_param, show: valid_attributes}, session: valid_session
       expect(response).to redirect_to(shows_url)
     end
   end
