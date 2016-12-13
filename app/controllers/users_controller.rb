@@ -47,13 +47,6 @@ class UsersController < ApplicationController
     redirect_to(shows_url, :notice => 'Admin request sent.')
   end
 
-  def request_token
-    respond_to do |format|
-      format.html { raise ActionController::RoutingError.new('Page Not Found') }
-      format.json { render json: { token: current_user.authentication_token }.to_json }
-    end
-  end
-
   private
     def set_user
       @user = User.find(params[:id])

@@ -1,8 +1,6 @@
 require 'tvdb_client'
 
 class ShowsController < ApplicationController
-  acts_as_token_authentication_handler_for User, 
-    except: [:show, :index, :abandoned, :completed, :in_progress]
   before_action :set_show, only: [:show, :edit, :update, :destroy, 
                                   :search, :update_tvdb]
   before_action :authenticate_user!, except: [:show, :index, :abandoned, 
