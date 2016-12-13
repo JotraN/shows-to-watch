@@ -2,7 +2,7 @@
   style="border-color:<% if show.abandoned %> red
                       <% elsif show.completed %> green
                       <% end %>">
-  <% if show.banner %>
+  <% if show.banner && !show.banner.empty? %>
     <%= image_tag "http://thetvdb.com/banners/#{ show.banner }" %>
   <% else %>
     <%= image_tag "default_image.png" %>
