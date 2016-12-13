@@ -154,7 +154,7 @@ RSpec.describe Api::ShowsController, type: :controller do
       it "redirects to the search show if no tvdb id" do
         valid_attributes[:tvdb_id] = nil
         post :create, params: {show: valid_attributes}, format: :json
-        expect(response).to redirect_to(search_api_show_url(Show.last))
+        expect(response).to redirect_to(search_api_show_url(Show.last, format: :json))
       end
 
       it "fails the response if user is not signed in" do
@@ -275,7 +275,7 @@ RSpec.describe Api::ShowsController, type: :controller do
         show = Show.create! valid_attributes
         valid_attributes[:tvdb_id] = nil
         put :update, params: {id: show.to_param, show: valid_attributes}, format: :json
-        expect(response).to redirect_to(search_api_show_url(Show.last))
+        expect(response).to redirect_to(search_api_show_url(Show.last, format: :json))
       end
 
       it "fails the response if user is not signed in" do

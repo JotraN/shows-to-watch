@@ -36,7 +36,7 @@ class Api::ShowsController < Api::ApiController
       if @show.tvdb_id
         render_json_only(@show)
       else
-        redirect_to search_api_show_url(@show)
+        redirect_to search_api_show_url(@show, format: :json)
       end
     else
       render_json_only(@show.errors)
@@ -59,7 +59,7 @@ class Api::ShowsController < Api::ApiController
       if @show.tvdb_id
         render_json_only(@show)
       else
-        redirect_to search_api_show_url(@show)
+        redirect_to search_api_show_url(@show, format: :json)
       end
     else
       render_json_only(@show.errors)
