@@ -24,8 +24,8 @@ Rails.application.routes.draw do
         get "in_progress", to: "shows#in_progress", as: "shows_in_progress"
       end
       get "search", on: :member
-      patch "update_tvdb", on: :member
     end
-    resources :users
+    get "/users/request_admin", to: "users#request_admin", as: "user_request_admin"
+    get "/users/request_token", to: "users#request_token", as: "user_request_token"
   end
 end

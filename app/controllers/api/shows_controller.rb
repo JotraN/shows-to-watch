@@ -72,13 +72,6 @@ class Api::ShowsController < Api::ApiController
   end
 
   private
-    def render_json_only(json)
-      respond_to do |format|
-        format.html { raise ActionController::RoutingError.new('Page Not Found') }
-        format.json { render json: json }
-      end
-    end
-
     def set_show
       @show = Show.find(params[:id])
     end
