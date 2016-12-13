@@ -59,7 +59,7 @@ RSpec.describe UsersController, type: :controller do
       expect(user.email).to eq(valid_attributes[:email])
     end
 
-    it "updates the requested user is an admin and the current user" do
+    it "updates the requested user if not an admin and the current user" do
       put :update, params: {id: @user.to_param, user: new_attributes}
       @user.reload
       expect(@user.email).to eq(new_attributes[:email])
@@ -156,20 +156,6 @@ RSpec.describe UsersController, type: :controller do
       @user.save
       get :request_admin
       expect(response).to redirect_to(shows_url)
-    end
-  end
-
-  describe "GET #request_token" do
-    it "fails the response if user is not signed in" do
-      sign_out @user
-      get :request_token, format: :json
-      expect(response).not_to be_success
-    end
-
-    it "gets the token for the current user" do
-      get :request_token, format: :json
-      expect(response.content_type).to eq("application/json")
-      expect(response.body).to eq({ token: @user.authentication_token }.to_json)
     end
   end
 end
