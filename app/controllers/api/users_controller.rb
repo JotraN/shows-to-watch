@@ -12,6 +12,9 @@ class Api::UsersController < Api::ApiController
   end
 
   def request_token
-    render_json_only({ token: current_user.authentication_token })
+    render_json_only({ 
+      user: current_user.email,
+      token: current_user.authentication_token 
+    })
   end
 end

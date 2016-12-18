@@ -50,7 +50,10 @@ RSpec.describe Api::UsersController, type: :controller do
 
     it "gets the token for the current user" do
       get :request_token, format: :json
-      expect(response.body).to eq({ token: @user.authentication_token }.to_json)
+      expect(response.body).to eq({ 
+        user: @user.email,
+        token: @user.authentication_token 
+      }.to_json)
     end
   end
 end

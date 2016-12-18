@@ -52,11 +52,7 @@ class Api::ShowsController < Api::ApiController
 
   def update
     if @show.update(show_params)
-      if @show.tvdb_id
-        render_json_only(@show)
-      else
-        redirect_to search_api_show_url(@show, format: :json)
-      end
+      render_json_only(@show)
     else
       render_json_only(@show.errors)
     end

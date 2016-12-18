@@ -264,13 +264,6 @@ RSpec.describe Api::ShowsController, type: :controller do
         expect(response.body).to eq(Show.last.to_json)
       end
 
-      it "redirects to the search show if no tvdb id" do
-        show = Show.create! valid_attributes
-        valid_attributes[:tvdb_id] = nil
-        put :update, params: {id: show.to_param, show: valid_attributes}, format: :json
-        expect(response).to redirect_to(search_api_show_url(Show.last, format: :json))
-      end
-
       it "fails the response if user is not signed in" do
         sign_out @user
         show = Show.create! valid_attributes
