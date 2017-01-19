@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :update, :destroy]
   get "/users/request_admin", to: "users#request_admin", as: "user_request_admin"
 
+  get "/download", to: "static_pages#download"
+
   resources :shows do
     collection do 
       get "abandoned", to: "shows#abandoned", as: "abandoned"

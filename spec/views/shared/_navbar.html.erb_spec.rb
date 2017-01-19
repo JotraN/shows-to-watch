@@ -29,4 +29,9 @@ RSpec.describe "shared/_navbar", type: :view do
     render
     expect(rendered).to match /Account/
   end
+
+  it "renders the download link" do
+    render
+    expect(rendered).to match /Download/
+  end
 end

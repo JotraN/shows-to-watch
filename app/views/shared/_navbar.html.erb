@@ -21,6 +21,7 @@
           </ul>
         </li>
         <li class="<%= 'active' if current_page? new_show_path %>"><%= link_to "Add Show", new_show_path %></li>
+        <li class="<%= 'active' if current_page? download_path %>"><%= link_to "Download", download_path %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
